@@ -5,6 +5,7 @@ RUN apk add --no-cache curl netcat-openbsd
 WORKDIR /app
 COPY check.sh /app/check.sh
 COPY targets.txt /app/targets.txt
-RUN chmod +x /app/check.sh
+
+RUN chmod 755 /app/check.sh
 
 CMD ["/app/check.sh"]
