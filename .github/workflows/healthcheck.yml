@@ -17,7 +17,7 @@ jobs:
         run: docker build -t netcheck .
 
       - name: Run check
-        run: docker run --rm -v "$PWD":/app netcheck
+        run: docker run --rm netcheck | tee report.txt
 
       - name: Upload report artifact
         if: always()
