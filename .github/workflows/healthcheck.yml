@@ -1,0 +1,27 @@
+name: Docker Network Health Check
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"   # هر 6 ساعت
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build image
+        run: docker build -t netcheck .
+
+      - name: Run check
+        run: docker run --rm -v "$PWD":/app netcheck
+
+      - name: Upload report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: report
+          path: report.txt
